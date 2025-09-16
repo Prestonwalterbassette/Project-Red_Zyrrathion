@@ -18,10 +18,15 @@ type Character struct {
 	Mana                int      `json:"MP"`
 	MaxMana             int      `json:"MaxMP"`
 	Inventory           []string `json:"inventory"`
+	Resources   		map[string]int `json:"resources"`
+	Items 				[]string `json:"items"`
 	Initiative          int      `json:"initiative"`
+	Currency 			int 	 `json:"Money"`
+	Purchasehistory 	[]int 	 `json:"History"`
+	EquipmentSlots 		map[string]string `json:"Equipment"`
 }
 
-func InitCharacter(name, gender, race, class string, level int, experience int, maxexperience int, skills []string, hp, maxHP int, ATK int, DEF int, mana int, maxmana int, inventory []string, initiative int) Character {
+func InitCharacter(name, gender, race, class string, level int, experience int, maxexperience int, skills []string, hp, maxHP int, ATK int, DEF int, mana int, maxmana int, inventory []string, initiative int, currency int) Character {
 	hasBaseSkill := false
 	for _, s := range skills {
 		if s == "Coup de poing" {
@@ -49,6 +54,7 @@ func InitCharacter(name, gender, race, class string, level int, experience int, 
 		MaxMana:             25,
 		Inventory:           inventory,
 		Initiative:          10,
+		Currency:            100,
 	}
 }
 
@@ -169,6 +175,7 @@ func CharacterCreation() Character {
 		MaxMana:             maxmana,
 		Inventory:           []string{"Potion"},
 		Initiative:          10,
+		Currency:            100,
 	}
 
 	fmt.Println("Personnage crée :", player.Name, " - ", player.Race)
