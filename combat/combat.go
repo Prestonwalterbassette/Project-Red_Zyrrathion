@@ -46,6 +46,7 @@ func CharacterTurn(player *character.Character, monster *monster.Monster) {
 		fmt.Println("=== Tour de", player.Name, " ===")
 		fmt.Println("1. Attaquer")
 		fmt.Println("2. Inventaire")
+		fmt.Println("3. Sorts")
 		fmt.Print("Choissisez une action: ")
 		fmt.Scanln(&choice)
 
@@ -85,6 +86,36 @@ func CharacterTurn(player *character.Character, monster *monster.Monster) {
 				}
 				fmt.Println("============")
 			}
+		case 3:
+			fmt.Println("=== Sorts Disponibles ===")
+			fmt.Println("Coup de poing (8 dégats + ATK%2)")
+			fmt.Println("Boule de feu (18 dégats)")
+			fmt.Println("Choississez un sort:")
+
+			var Spellchoice int
+			fmt.Scanln(&Spellchoice)
+
+			var damage int
+			switch Spellchoice {
+			case 1:
+				damage = 8 + player.Attack%2
+				fmt.Println("Vous lancez un crochet et infligez", damage, "de dégâts !")
+			case 2:
+				damage = 18
+				fmt.Println("Vous lancez un sort de feu et infligez", damage, "de dégâts !")
+			default:
+				fmt.Println("Sort invalide, choissisez parmi ceux que vous avez.")
+				continue
+			}
+
+			monster.CurrentHealthPoints -= damage
+			if monster.CurrentHealthPoints < 0 {
+				monster.CurrentHealthPoints = 0
+			}
+			fmt.Println(monster.Name, "HP: ", monster.CurrentHealthPoints, "/", monster.MaxHealthPoints)
+
+			GoblinPattern(*monster, player, 1)
+			return
 		}
 	}
 }
