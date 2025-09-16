@@ -96,22 +96,33 @@ func CharacterTurn(player *character.Character, monster *monster.Monster) {
 			fmt.Scanln(&Spellchoice)
 
 			var damage int
+			var manaCost int
+
 			switch Spellchoice {
 			case 1:
-				damage = 8 + player.Attack%2
-				fmt.Println("Vous lancez un crochet et infligez", damage, "de dégâts !")
+				damage = 8 + player.Attack/2
+				manaCost = 5
+
 			case 2:
-				damage = 18
-				fmt.Println("Vous lancez un sort de feu et infligez", damage, "de dégâts !")
+				damage = 18 + player.Attack/2
+				manaCost = 15
+
 			default:
 				fmt.Println("Sort invalide, choissisez parmi ceux que vous avez.")
 				continue
 			}
+			if player.Mana < manaCost {
+				fmt.Println("Pas assez de Mana, vous ne faites rien !")
+				continue
+			}
 
+			player.Mana -= manaCost
 			monster.CurrentHealthPoints -= damage
 			if monster.CurrentHealthPoints < 0 {
 				monster.CurrentHealthPoints = 0
 			}
+
+			fmt.Println("Vous lancez un sort et infligez", damage, "de dégâts !")
 			fmt.Println(monster.Name, "HP: ", monster.CurrentHealthPoints, "/", monster.MaxHealthPoints)
 
 			GoblinPattern(*monster, player, 1)
