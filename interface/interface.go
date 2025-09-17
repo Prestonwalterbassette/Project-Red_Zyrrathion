@@ -56,7 +56,7 @@ func (g *Game) Update() error {
 		if !g.mouseDown {
 			g.mouseDown = true
 			// Hitbox du bouton "Jouer"
-			if x >= 360 && x <= 360+200 && y >= 330-48 && y <= 330 { // 48 = taille du texte
+			if x >= 920 && x <= 920+200 && y >= 900-48 && y <= 900 { // 48 = taille du texte
 				fmt.Println("Bouton 'Jouer' cliqué !")
 			}
 		}
