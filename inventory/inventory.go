@@ -2,10 +2,10 @@ package inventory
 
 import (
 	"fmt"
-	"Projet-Red_Zyrrathion/character"
+	"Projet-Red_Zyrrathion/model"
 )
 
-func AccessInventory(c *character.Character) {
+func AccessInventory(c *model.Character) {
 	if len(c.Inventory) == 0 {
 		fmt.Println("L'inventaire est vide.")
 		return
@@ -26,7 +26,7 @@ func takePot(potion int, hp *int, maxHP int) {
 	}
 }
 
-func UseItem(c *character.Character, item string) {
+func UseItem(c *model.Character, item string) {
 	switch item {
 	case "Livre de sort : Boule de Feu":
 		fmt.Println("Vous utilisez le Livre de sort : Boule de Feu !")
@@ -55,7 +55,7 @@ func UseItem(c *character.Character, item string) {
 	}
 }
 
-func AddItem(c *character.Character, item string) {
+func AddItem(c *model.Character, item string) {
 	if len(c.Inventory) >= 10 {
 		fmt.Println("Inventaire plein ! Vous ne pouvez portez plus de 10 objets dans votre inventaire !")
 		return

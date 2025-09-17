@@ -1,10 +1,10 @@
 package combat
 
 import (
-	"Projet-Red_Zyrrathion/character"
 	"Projet-Red_Zyrrathion/experience"
 	"Projet-Red_Zyrrathion/inventory"
 	"Projet-Red_Zyrrathion/monster"
+	"Projet-Red_Zyrrathion/model"
 	"fmt"
 )
 
@@ -16,7 +16,7 @@ func DisplayMonster(m monster.Monster) {
 	fmt.Println("==================")
 }
 
-func GoblinPattern(g monster.Monster, player *character.Character, rounds int) {
+func GoblinPattern(g monster.Monster, player *model.Character, rounds int) {
 	for turn := 1; turn <= rounds; turn++ {
 		damage := g.Attack - player.Defense%2
 
@@ -40,7 +40,7 @@ func GoblinPattern(g monster.Monster, player *character.Character, rounds int) {
 	}
 }
 
-func CharacterTurn(player *character.Character, monster *monster.Monster) {
+func CharacterTurn(player *model.Character, monster *monster.Monster) {
 	var choice int
 	for {
 		fmt.Println("=== Tour de", player.Name, " ===")
@@ -131,7 +131,7 @@ func CharacterTurn(player *character.Character, monster *monster.Monster) {
 	}
 }
 
-func TrainingFight(player *character.Character) {
+func TrainingFight(player *model.Character) {
 	goblin := monster.InitGoblin()
 
 	fmt.Println("=== Entraînement ===")

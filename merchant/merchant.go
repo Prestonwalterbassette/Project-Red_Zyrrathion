@@ -2,12 +2,12 @@ package merchant
 
 import (
 	"fmt"
-	"Projet-Red_Zyrrathion/character"
+	"Projet-Red_Zyrrathion/model"
 	"Projet-Red_Zyrrathion/currency"
 )
 
 // Marchand lance le menu marchand pour acheter des objets
-func Marchand(c *character.Character) {
+func Marchand(c *model.Character) {
 	for {
 		fmt.Println("\n=== MARCHAND ===")
 		fmt.Println("1. Acheter Potion (3 pièces)")

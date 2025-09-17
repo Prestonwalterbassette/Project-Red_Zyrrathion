@@ -1,32 +1,11 @@
 package character
 
-import "fmt"
+import (
+	"Projet-Red_Zyrrathion/model"
+	"fmt"
+)
 
-type Character struct {
-	Name                string   `json:"name"`
-	Gender              string   `json:"gender"`
-	Race                string   `json:"race"`
-	Class               string   `json:"class"`
-	Level               int      `json:"level"`
-	Experience          int      `json:"EXP"`
-	MaxExperience       int      `json:"MaxEXP"`
-	Skills              []string `json:"skills"`
-	CurrentHealthPoints int      `json:"HP"`
-	MaxHealthPoints     int      `json:"maxHP"`
-	Attack              int      `json:"ATK"`
-	Defense             int      `json:"DEF"`
-	Mana                int      `json:"MP"`
-	MaxMana             int      `json:"MaxMP"`
-	Inventory           []string `json:"inventory"`
-	Resources   		map[string]int `json:"resources"`
-	Items 				[]string `json:"items"`
-	Initiative          int      `json:"initiative"`
-	Currency 			int 	 `json:"Money"`
-	Purchasehistory 	[]int 	 `json:"History"`
-	EquipmentSlots 		map[string]string `json:"Equipment"`
-}
-
-func InitCharacter(name, gender, race, class string, level int, experience int, maxexperience int, skills []string, hp, maxHP int, ATK int, DEF int, mana int, maxmana int, inventory []string, initiative int, currency int) Character {
+func InitCharacter(name, gender, race, class string, level int, experience int, maxexperience int, skills []string, hp, maxHP int, ATK int, DEF int, mana int, maxmana int, inventory []string, initiative int, currency int) model.Character {
 	hasBaseSkill := false
 	for _, s := range skills {
 		if s == "Coup de poing" {
@@ -38,7 +17,7 @@ func InitCharacter(name, gender, race, class string, level int, experience int, 
 		skills = append(skills, "Coup de poing")
 	}
 
-	return Character{
+	return model.Character{
 		Name:                name,
 		Gender:              gender,
 		Race:                race,
@@ -58,7 +37,7 @@ func InitCharacter(name, gender, race, class string, level int, experience int, 
 	}
 }
 
-func CharacterCreation() Character {
+func CharacterCreation() model.Character {
 	var name string
 	var maxHP int
 	var race string
@@ -67,6 +46,7 @@ func CharacterCreation() Character {
 	var class string
 	var mana int
 	var maxmana int
+	var gender string
 
 	fmt.Print("Entrez le nom de votre personnage : ")
 	fmt.Scanln(&name)
@@ -82,6 +62,24 @@ func CharacterCreation() Character {
 			name = first
 		}
 	}
+
+	for {
+		fmt.Print("Choissisez le sexe de votre personnage (Homme, Femme, Autre):")
+		fmt.Scanln(&gender)
+
+		switch gender {
+		case "Homme", "HOMME", "homme":
+			gender = "Homme"
+		case "Femme", "FEMME", "femme":
+			gender = "Femme"
+		case "Autre", "AUTRE", "autre":
+			gender = "Autre"
+		default:
+			fmt.Println("Choix non accepté. Veuillez choisir une des options.")
+			continue
+	}
+	break	
+}
 
 	for {
 		fmt.Print("Choissisez une race (Humain, Elfe, Nain) : ")
@@ -157,9 +155,9 @@ func CharacterCreation() Character {
 	hp := maxHP / 2
 	mana = maxmana / 2
 
-	player := Character{
+	player := model.Character{
 		Name:          name,
-		Gender:        "Male",
+		Gender:        gender,
 		Race:          race,
 		Class:         class,
 		Level:         1,
@@ -182,7 +180,7 @@ func CharacterCreation() Character {
 	return player
 }
 
-func DisplayCharacterInfo(c Character) {
+func DisplayCharacterInfo(c *model.Character) {
 
 	fmt.Println("Character Information:")
 	fmt.Println("Name:", c.Name)
@@ -212,7 +210,7 @@ func DisplayCharacterInfo(c Character) {
 	fmt.Println("-------------------------")
 }
 
-func (c *Character) Spellbook(spell string) {
+func Spellbook(c *model.Character, spell string) {
 	for _, s := range c.Skills {
 		if s == spell {
 			fmt.Println("Le sort", spell, "est déjà appris !")

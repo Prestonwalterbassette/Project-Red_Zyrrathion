@@ -1,14 +1,16 @@
 package menu
 
 import (
-	"Projet-Red_Zyrrathion/character"
+	"Projet-Red_Zyrrathion/model"
 	"Projet-Red_Zyrrathion/combat"
+	"Projet-Red_Zyrrathion/equipment"
 	"Projet-Red_Zyrrathion/forgeron"
 	"Projet-Red_Zyrrathion/merchant"
+	"Projet-Red_Zyrrathion/character"
 	"fmt"
 )
 
-func AfficherMenu(c *character.Character) {
+func AfficherMenu(c *model.Character) {
 	var choice int
 
 	for {
@@ -18,13 +20,14 @@ func AfficherMenu(c *character.Character) {
 		fmt.Println("3. Entraînement")
 		fmt.Println("4. Forgeron")
 		fmt.Println("5. Marchant")
-		fmt.Println("6. Quitter")
+		fmt.Println("6. Equipement")
+		fmt.Println("7. Quitter")
 		fmt.Print("Votre choix : ")
 		fmt.Scanln(&choice)
 
 		switch choice {
 		case 1:
-			character.DisplayCharacterInfo(*c)
+			character.DisplayCharacterInfo(c)
 		case 2:
 			fmt.Println("Inventaire :", c.Inventory)
 		case 3:
@@ -67,6 +70,10 @@ func AfficherMenu(c *character.Character) {
 			merchant.Marchand(c)
 
 		case 6:
+			fmt.Println("Equipement")
+			equipment.DisplayEquipment(c)
+
+		case 7:
 			fmt.Println("Voulez-vous quitter le jeu aussi tôt ? (Y/N)")
 			var input string
 			fmt.Scanln(&input)
