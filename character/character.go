@@ -77,9 +77,9 @@ func CharacterCreation() model.Character {
 		default:
 			fmt.Println("Choix non accepté. Veuillez choisir une des options.")
 			continue
+		}
+		break
 	}
-	break	
-}
 
 	for {
 		fmt.Print("Choissisez une race (Humain, Elfe, Nain) : ")
@@ -113,6 +113,7 @@ func CharacterCreation() model.Character {
 		}
 		break
 	}
+
 	for {
 		fmt.Println("Choissisez une class(Guerrier, Archer, Mage) pour votre", race, " .")
 		fmt.Scanln(&class)
@@ -122,6 +123,7 @@ func CharacterCreation() model.Character {
 			class = "Guerrier"
 			text := "En levant ton épée, tu montres au monde que tu es une personne dignes d'éloges et de respect."
 			fmt.Print(text)
+
 			maxHP = maxHP + 50
 			ATK = ATK + 5
 			DEF = DEF + 6

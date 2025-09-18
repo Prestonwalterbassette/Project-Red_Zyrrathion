@@ -22,9 +22,26 @@ func main() {
 	}
 	fmt.Println()
 
-	fmt.Println(DarkBlue + `Zyrrathion est un monde melant des humains , des elfes et des nains qui copperaient pour un monde futuriste. 
-    il y a 2000 ans coexistait les monstres et les elfes mais une guerre eclata et devinrent ennemis à jamais. 
-    Vous seul a travers la contréé de Zyrrathion peuvent retablir la paix entre monstres et elfes.` + Reset)
+	texte := "Zyrrathion est un monde melant des humains , des elfes et des nains qui copperaient pour un monde futuriste."
+	for _, c := range texte {
+		fmt.Printf("%s%c%s", DarkBlue, c, Reset)
+		time.Sleep(30 * time.Millisecond)
+	}
+	fmt.Println()
+
+	textes := "il y a 2000 ans coexistait les monstres et les elfes mais une guerre eclata et devinrent ennemis à jamais."
+	for _, c := range textes {
+		fmt.Printf("%s%c%s", DarkBlue, c, Reset)
+		time.Sleep(30 * time.Millisecond)
+	}
+	fmt.Println()
+
+	txt := "Vous seul a travers la contréé de Zyrrathion peuvent retablir la paix entre monstres et elfes."
+	for _, c := range txt {
+		fmt.Printf("%s%c%s", Bold+DarkBlue, c, Reset)
+		time.Sleep(30 * time.Millisecond)
+	}
+	fmt.Println()
 
 	player := character.CharacterCreation()
 	character.DisplayCharacterInfo(&player)
