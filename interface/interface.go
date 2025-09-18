@@ -1,111 +1,39 @@
-package main
+package ui
 
 import (
-	"fmt"
-	"image"
 	"image/color"
-	"log"
-	"os"
-
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"golang.org/x/image/font"
-	"golang.org/x/image/font/opentype"
+	"golang.org/x/image/font/basicfont"
 )
 
-var myFont font.Face
-
-func init() {
-	// Charger la police (ex: Arial.ttf)
-	b, err := os.ReadFile("Arial.ttf")
-	if err != nil {
-		log.Fatal(err)
-	}
-	tt, err := opentype.Parse(b)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Créer un face avec la taille souhaitée
-	myFont, err = opentype.NewFace(tt, &opentype.FaceOptions{
-		Size:    48, // taille du texte
-		DPI:     72,
-		Hinting: font.HintingFull,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
+// Bouton représente un bouton cliquable
+type Bouton struct {
+	X, Y          int
+	Width, Height int
+	Label         string
+	Color         color.Color
 }
 
-func drawText(screen *ebiten.Image, x, y int, msg string, col color.Color) {
-	text.Draw(screen, msg, myFont, x, y, col)
-}
-
-type Game struct {
-	background *ebiten.Image
-	mouseDown  bool
-}
-
-func (g *Game) Update() error {
-	x, y := ebiten.CursorPosition()
-	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
-		if !g.mouseDown {
-			g.mouseDown = true
-			// Hitbox du bouton "Jouer"
-			if x >= 920 && x <= 920+200 && y >= 900-48 && y <= 900 { // 48 = taille du texte
-				fmt.Println("Bouton 'Jouer' cliqué !")
-			}
-		}
-	} else {
-		g.mouseDown = false
-	}
-	return nil
-}
-
-func (g *Game) Draw(screen *ebiten.Image) {
-	// Redimensionner l’image au format fenêtre
+// Draw dessine le bouton sur l'écran
+func (b *Bouton) Draw(screen *ebiten.Image) {
+	// Dessiner un rectangle
+	rect := ebiten.NewImage(b.Width, b.Height)
+	rect.Fill(b.Color)
 	op := &ebiten.DrawImageOptions{}
-	sw, sh := g.background.Size()
-	scaleX := float64(1920) / float64(sw)
-	scaleY := float64(1080) / float64(sh)
-	op.GeoM.Scale(scaleX, scaleY)
-	screen.DrawImage(g.background, op)
+	op.GeoM.Translate(float64(b.X), float64(b.Y))
+	screen.DrawImage(rect, op)
 
-	// Bouton rouge avec texte agrandi
-	drawText(screen, 920, 900, "Jouer", color.White)
-
+	// Dessiner le texte centré approximativement
+	text.Draw(screen, b.Label, basicfont.Face7x13, b.X+10, b.Y+b.Height-10, color.White)
 }
 
-func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
-	return 1920, 1080
+// IsClicked vérifie si le bouton est cliqué
+func (b *Bouton) IsClicked(mouseX, mouseY int) bool {
+	return mouseX >= b.X && mouseX <= b.X+b.Width &&
+		mouseY >= b.Y && mouseY <= b.Y+b.Height
 }
-
-func main() {
-	// Charger l'image de fond
-	file, err := os.Open("Zyrrathion.png")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	img, _, err := image.Decode(file)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	game := &Game{
-		background: ebiten.NewImageFromImage(img),
-		mouseDown:  false,
-	}
-
-	ebiten.SetWindowSize(1920, 1080)
-	ebiten.SetWindowTitle("Zyrrathion")
-
-	if err := ebiten.RunGame(game); err != nil {
-		log.Fatal(err)
-	}
+func ColorRGB(r, g, b int) color.Color{
+	return color.RGBA{uint8(r), uint8(g), uint8(b), 255}
 }

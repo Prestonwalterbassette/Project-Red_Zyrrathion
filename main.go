@@ -1,51 +1,140 @@
 package main
 
 import (
-	"Projet-Red_Zyrrathion/character"
-	"Projet-Red_Zyrrathion/menu"
 	"fmt"
+	"image"
+	"log"
+	"os"
 	"time"
+
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
+
+	"Projet-Red_Zyrrathion/character"
+	ui "Projet-Red_Zyrrathion/interface"
+	"Projet-Red_Zyrrathion/menu"
+
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func main() {
+type Game struct {
+	background *ebiten.Image
+	mouseDown  bool
+	started    bool
+	bouton     *ui.Bouton
+}
 
+// Affiche le texte d'intro dans la console
+func afficherIntro() {
 	const (
 		Reset    = "\033[0m"
 		Bold     = "\033[1m"
 		DarkBlue = "\033[34m"
 	)
 
-	text := "Bienvenue dans Zyrrathion !"
-	for _, c := range text {
-		fmt.Printf("%s%c%s", Bold+DarkBlue, c, Reset)
-		time.Sleep(30 * time.Millisecond)
+	introTexts := []string{
+		"Bienvenue dans Zyrrathion !",
+		"Zyrrathion est un monde melant des humains, des elfes et des nains qui copperaient pour un monde futuriste.",
+		"Il y a 2000 ans coexistait les monstres et les elfes mais une guerre eclata et devinrent ennemis à jamais.",
+		"Vous seul à travers la contrée de Zyrrathion pouvez retablir la paix entre monstres et elfes.",
 	}
-	fmt.Println()
 
-	texte := "Zyrrathion est un monde melant des humains , des elfes et des nains qui copperaient pour un monde futuriste."
-	for _, c := range texte {
-		fmt.Printf("%s%c%s", DarkBlue, c, Reset)
-		time.Sleep(30 * time.Millisecond)
+	for i, txt := range introTexts {
+		for _, c := range txt {
+			if i == 0 || i == 3 {
+				fmt.Printf("%s%s%c%s", Bold, "\033[34m", c, Reset)
+			} else {
+				fmt.Printf("%s%c%s", DarkBlue, c, Reset)
+			}
+			time.Sleep(30 * time.Millisecond)
+		}
+		fmt.Println()
 	}
-	fmt.Println()
+}
 
-	textes := "il y a 2000 ans coexistait les monstres et les elfes mais une guerre eclata et devinrent ennemis à jamais."
-	for _, c := range textes {
-		fmt.Printf("%s%c%s", DarkBlue, c, Reset)
-		time.Sleep(30 * time.Millisecond)
+func (g *Game) Update() error {
+	if g.started {
+		// Le jeu a commencé, aucune action ici
+		return nil
 	}
-	fmt.Println()
 
-	txt := "Vous seul a travers la contréé de Zyrrathion peuvent retablir la paix entre monstres et elfes."
-	for _, c := range txt {
-		fmt.Printf("%s%c%s", Bold+DarkBlue, c, Reset)
-		time.Sleep(30 * time.Millisecond)
+	x, y := ebiten.CursorPosition()
+	if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
+		if !g.mouseDown {
+			g.mouseDown = true
+			if g.bouton.IsClicked(x, y) {
+				fmt.Println("Bouton 'Jouer' cliqué !")
+				g.started = true
+
+				// Affichage du texte d'intro
+				afficherIntro()
+
+				// Création du personnage et menu
+				player := character.CharacterCreation()
+				menu.AfficherMenu(&player)
+				fmt.Println("Fin du jeu.")
+			}
+		}
+	} else {
+		g.mouseDown = false
 	}
-	fmt.Println()
+	return nil
+}
 
-	player := character.CharacterCreation()
-	character.DisplayCharacterInfo(&player)
+func (g *Game) Draw(screen *ebiten.Image) {
+	// Dessiner l'image de fond
+	op := &ebiten.DrawImageOptions{}
+	sw, sh := g.background.Size()
+	scaleX := float64(1920) / float64(sw)
+	scaleY := float64(1080) / float64(sh)
+	op.GeoM.Scale(scaleX, scaleY)
+	screen.DrawImage(g.background, op)
 
-	menu.AfficherMenu(&player)
-	fmt.Print(Bold + "Fin du jeu." + Reset)
+	// Dessiner le bouton si le jeu n'a pas commencé
+	if !g.started {
+		g.bouton.Draw(screen)
+	}
+}
+
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
+	return 1920, 1080
+}
+
+func main() {
+	// Charger l'image de fond
+	file, err := os.Open("assets/Zyrrathion.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	img, _, err := image.Decode(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Initialiser le jeu et le bouton
+	boutonJouer := &ui.Bouton{
+		X:      860,
+		Y:      880,
+		Width:  200,
+		Height: 50,
+		Label:  "Jouer",
+		Color:  ui.ColorRGB(200, 0, 0),
+	}
+
+	game := &Game{
+		background: ebiten.NewImageFromImage(img),
+		mouseDown:  false,
+		started:    false,
+		bouton:     boutonJouer,
+	}
+
+	ebiten.SetWindowSize(1920, 1080)
+	ebiten.SetWindowTitle("Zyrrathion")
+
+	if err := ebiten.RunGame(game); err != nil {
+		log.Fatal(err)
+	}
 }
