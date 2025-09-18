@@ -3,13 +3,10 @@ package main
 import (
 	"fmt"
 	"image"
+	_ "image/png"
 	"log"
 	"os"
 	"time"
-
-	_ "image/gif"
-	_ "image/jpeg"
-	_ "image/png"
 
 	"Projet-Red_Zyrrathion/character"
 	ui "Projet-Red_Zyrrathion/interface"
