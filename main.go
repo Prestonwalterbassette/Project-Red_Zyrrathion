@@ -100,7 +100,7 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 
 func main() {
 	// Charger l'image de fond
-	file, err := os.Open("assets/Zyrrathion.png")
+	file, err := os.Open("assets/images/Zyrrathion.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -111,6 +111,9 @@ func main() {
 		log.Fatal(err)
 	}
 
+	fontPath := "assets/polices/Fixedsys62.ttf"
+	fontFace := ui.LoadFont(fontPath, 32)
+
 	// Initialiser le jeu et le bouton
 	boutonJouer := &ui.Bouton{
 		X:      860,
@@ -119,6 +122,7 @@ func main() {
 		Height: 50,
 		Label:  "Jouer",
 		Color:  ui.ColorRGB(200, 0, 0),
+		Font:   fontFace,
 	}
 
 	game := &Game{
