@@ -1,4 +1,4 @@
-package main
+package forgeron
 
 import "fmt"
 
@@ -10,21 +10,21 @@ type Item struct {
 
 // Personne représente un joueur avec inventaire et items fabriqués
 type Personne struct {
-	Money      int
-	Inventaire map[string]int
-	Items      []string
+	Money     int
+	Inventory map[string]int
+	Items     []string
 }
 
 // Fabriquer tente de fabriquer un objet à partir de l'inventaire
 func (p *Personne) Fabriquer(item Item) {
 	for res, qte := range item.RessourcesRequises {
-		if p.Inventaire[res] < qte {
+		if p.Inventory[res] < qte {
 			fmt.Printf("Pas assez de %s pour fabriquer %s\n", res, item.Nom)
 			return
 		}
 	}
 	for res, qte := range item.RessourcesRequises {
-		p.Inventaire[res] -= qte
+		p.Inventory[res] -= qte
 	}
 	p.Items = append(p.Items, item.Nom)
 	fmt.Println("Item fabriqué :", item.Nom)
@@ -64,23 +64,4 @@ func AfficherObjetsAFabriquer() {
 			fmt.Printf("    %d x %s\n", qte, res)
 		}
 	}
-}
-func main() {
-	joueur := Personne{
-		Money: 100,
-		Inventaire: map[string]int{
-			"plume de corbeau": 2,
-			"cuir de sanglier": 2,
-			"fourrure de loup": 3,
-			"peau de troll":    1,
-		},
-		Items: []string{},
-	}
-	AfficherObjetsAFabriquer()
-
-	fmt.Print("\n--- Tentative de fabrication ---")
-	joueur.Fabriquer(ObjetsAFabriquer["Chapeau d'aventurier"])
-
-	fmt.Print("Inventaire après objets fabriquation:", joueur.Inventaire)
-	fmt.Print("Items Fabriqués:", joueur.Items)
 }

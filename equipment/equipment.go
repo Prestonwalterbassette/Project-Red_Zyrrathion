@@ -1,24 +1,29 @@
 package equipment
 
 import (
-	"Projet-Red_Zyrrathion/character"
+	"Projet-Red_Zyrrathion/model"
 	"fmt"
 )
 
-// Structure représentant un équipement
-type Equipment struct {
-	Name    string
-	Slot    string // Head, Torso, Feet
-	BonusHP int
-}
-
 // Initialise les équipements de base du joueur
-func InitEquipment(c *character.Character) {
+func InitEquipment(c *model.Character) {
 	// Équipements de base
-	baseEquipment := map[string]Equipment{
-		"Head":  {"Casque en cuir", "Head", 15},
-		"Torso": {"Plastron en fer", "Torso", 20},
-		"Feet":  {"Bottes solides", "Feet", 10},
+	baseEquipment := map[string]model.Equipment{
+		"Head": {
+			Name:    "Casque en cuir",
+			Slot:    "Head",
+			BonusHP: 15,
+		},
+		"Torso": {
+			Name:    "Plastron en fer",
+			Slot:    "Torso",
+			BonusHP: 20,
+		},
+		"Feet": {
+			Name:    "Bottes solides",
+			Slot:    "Feet",
+			BonusHP: 10,
+		},
 	}
 
 	// Application des bonus PV
@@ -38,7 +43,7 @@ func InitEquipment(c *character.Character) {
 }
 
 // Affichage des équipements du joueur
-func DisplayEquipment(c *character.Character) {
+func DisplayEquipment(c *model.Character) {
 	if len(c.EquipmentSlots) == 0 {
 		fmt.Println("Equipements: Aucun !")
 		return

@@ -1,10 +1,10 @@
 package combat
 
 import (
-	"Projet-Red_Zyrrathion/character"
-	"Projet-Red_Zyrrathion/experience"
-	"Projet-Red_Zyrrathion/inventory"
-	"Projet-Red_Zyrrathion/monster"
+	"Project-Red_Zyrrathion/experience"
+	"Project-Red_Zyrrathion/inventory"
+	"Project-Red_Zyrrathion/model"
+	"Project-Red_Zyrrathion/monster"
 	"fmt"
 )
 
@@ -16,7 +16,7 @@ func DisplayMonster(m monster.Monster) {
 	fmt.Println("==================")
 }
 
-func GoblinPattern(g monster.Monster, player *character.Character, rounds int) {
+func GoblinPattern(g monster.Monster, player *model.Character, rounds int) {
 	for turn := 1; turn <= rounds; turn++ {
 		damage := g.Attack - player.Defense%2
 
@@ -40,12 +40,13 @@ func GoblinPattern(g monster.Monster, player *character.Character, rounds int) {
 	}
 }
 
-func CharacterTurn(player *character.Character, monster *monster.Monster) {
+func CharacterTurn(player *model.Character, monster *monster.Monster) {
 	var choice int
 	for {
 		fmt.Println("=== Tour de", player.Name, " ===")
 		fmt.Println("1. Attaquer")
 		fmt.Println("2. Inventaire")
+		fmt.Println("3. Sorts")
 		fmt.Print("Choissisez une action: ")
 		fmt.Scanln(&choice)
 
@@ -85,11 +86,52 @@ func CharacterTurn(player *character.Character, monster *monster.Monster) {
 				}
 				fmt.Println("============")
 			}
+		case 3:
+			fmt.Println("=== Sorts Disponibles ===")
+			fmt.Println("Coup de poing (8 dégats + ATK%2)")
+			fmt.Println("Boule de feu (18 dégats)")
+			fmt.Println("Choississez un sort:")
+
+			var Spellchoice int
+			fmt.Scanln(&Spellchoice)
+
+			var damage int
+			var manaCost int
+
+			switch Spellchoice {
+			case 1:
+				damage = 8 + player.Attack/2
+				manaCost = 5
+
+			case 2:
+				damage = 18 + player.Attack/2
+				manaCost = 15
+
+			default:
+				fmt.Println("Sort invalide, choissisez parmi ceux que vous avez.")
+				continue
+			}
+			if player.Mana < manaCost {
+				fmt.Println("Pas assez de Mana, vous ne faites rien !")
+				continue
+			}
+
+			player.Mana -= manaCost
+			monster.CurrentHealthPoints -= damage
+			if monster.CurrentHealthPoints < 0 {
+				monster.CurrentHealthPoints = 0
+			}
+
+			fmt.Println("Vous lancez un sort et infligez", damage, "de dégâts !")
+			fmt.Println(monster.Name, "HP: ", monster.CurrentHealthPoints, "/", monster.MaxHealthPoints)
+
+			GoblinPattern(*monster, player, 1)
+			return
 		}
 	}
 }
 
-func TrainingFight(player *character.Character) {
+func TrainingFight(player *model.Character) {
 	goblin := monster.InitGoblin()
 
 	fmt.Println("=== Entraînement ===")
