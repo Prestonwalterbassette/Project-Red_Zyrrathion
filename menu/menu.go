@@ -1,13 +1,14 @@
 package menu
 
 import (
-	"Projet-Red_Zyrrathion/model"
+	"Projet-Red_Zyrrathion/character"
 	"Projet-Red_Zyrrathion/combat"
 	"Projet-Red_Zyrrathion/equipment"
 	"Projet-Red_Zyrrathion/forgeron"
 	"Projet-Red_Zyrrathion/merchant"
-	"Projet-Red_Zyrrathion/character"
+	"Projet-Red_Zyrrathion/model"
 	"fmt"
+	"os"
 )
 
 func AfficherMenu(c *model.Character) {
@@ -79,7 +80,7 @@ func AfficherMenu(c *model.Character) {
 			fmt.Scanln(&input)
 			if input == "Y" || input == "y" {
 				fmt.Println("Adieu !")
-				return
+				os.Exit(0)
 			}
 		default:
 			fmt.Println("Choix invalide !")

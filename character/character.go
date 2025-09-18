@@ -9,7 +9,7 @@ import (
 
 func Printfast(text string, delay time.Duration) {
 	for _, c := range text {
-		fmt.Print("%", c)
+		fmt.Printf("%c", c)
 		time.Sleep(delay)
 	}
 	fmt.Println()
@@ -125,7 +125,6 @@ func CharacterCreation() model.Character {
 	}
 	for {
 		fmt.Println("Choissisez une class(Guerrier, Archer, Mage) pour votre", race, " .")
-		fmt.Scanln(&class)
 
 		fmt.Println("1. Guerrier  - HP +50, ATK +5, DEF +6, Mana +15")
 		Printfast("   Description : En levant ton épée, tu montres au monde que tu es digne d'éloges et de respect.", 5*time.Millisecond)
@@ -136,14 +135,14 @@ func CharacterCreation() model.Character {
 		fmt.Println("3. Mage      - HP +15, ATK +10, DEF +2, Mana +50")
 		Printfast("   Description : Tes sorts et ta mana sont uniques et inégalés. Tu sèmes le chaos et la destruction avec tes sorts.", 5*time.Millisecond)
 
-		fmt.Print("Entrez le nom de la classe ou le numéro correspondant : ")
+		fmt.Print("Entrez le nom de la classe : ")
 		fmt.Scanln(&class)
 		class = strings.Title(strings.ToLower(class))
 
 		switch class {
 		case "Guerrier", "GUERRIER", "guerrier":
 			class = "Guerrier"
-			Printfast("Vore épée sème la paix et la justice !", 10*time.Millisecond)
+			Printfast("Votre épée sème la paix et la justice !", 10*time.Millisecond)
 			maxHP = maxHP + 50
 			ATK = ATK + 5
 			DEF = DEF + 6
@@ -151,7 +150,7 @@ func CharacterCreation() model.Character {
 
 		case "Archer", "ARCHER", "archer":
 			class = "Archer"
-			Printfast("Vous ètes maintenant un élite de la tir !", 3*time.Millisecond)
+			Printfast("Vous êtes maintenant un élite du tir !", 3*time.Millisecond)
 			maxHP = maxHP + 25
 			ATK = ATK + 7
 			DEF = DEF + 3
