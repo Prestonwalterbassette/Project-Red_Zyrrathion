@@ -1,12 +1,12 @@
 package menu
 
 import (
-	"Projet-Red_Zyrrathion/character"
-	"Projet-Red_Zyrrathion/combat"
-	"Projet-Red_Zyrrathion/equipment"
-	"Projet-Red_Zyrrathion/forgeron"
-	"Projet-Red_Zyrrathion/merchant"
-	"Projet-Red_Zyrrathion/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/character"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/combat"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/equipment"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/forgeron"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/merchant"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/model"
 	"fmt"
 	"os"
 )

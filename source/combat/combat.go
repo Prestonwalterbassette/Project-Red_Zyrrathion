@@ -1,10 +1,10 @@
 package combat
 
 import (
-	"Projet-Red_Zyrrathion/experience"
-	"Projet-Red_Zyrrathion/inventory"
-	"Projet-Red_Zyrrathion/monster"
-	"Projet-Red_Zyrrathion/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/experience"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/inventory"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/monster"
 	"fmt"
 )
 

@@ -2,8 +2,8 @@ package experience
 
 import (
 	"fmt"
-	"Projet-Red_Zyrrathion/monster"
-	"Projet-Red_Zyrrathion/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/monster"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/model"
 )
 
 func LevelUp(player *model.Character) {

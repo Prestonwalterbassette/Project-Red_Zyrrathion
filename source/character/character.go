@@ -1,7 +1,7 @@
 package character
 
 import (
-	"Projet-Red_Zyrrathion/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/model"
 	"fmt"
 	"strings"
 	"time"

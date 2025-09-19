@@ -2,8 +2,8 @@ package merchant
 
 import (
 	"fmt"
-	"Projet-Red_Zyrrathion/model"
-	"Projet-Red_Zyrrathion/currency"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/currency"
 )
 
 // Marchand lance le menu marchand pour acheter des objets

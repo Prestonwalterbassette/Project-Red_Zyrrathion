@@ -1,4 +1,4 @@
-module Projet-Red_Zyrrathion
+module github.com/Prestonwalterbassette/Projet-Red_Zyrrathion
 
 go 1.25.0
 

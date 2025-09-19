@@ -2,7 +2,7 @@ package inventory
 
 import (
 	"fmt"
-	"Projet-Red_Zyrrathion/model"
+	"github.com/Prestonwalterbassette/Projet-Red_Zyrrathion/source/model"
 )
 
 func AccessInventory(c *model.Character) {
