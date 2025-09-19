@@ -6,6 +6,8 @@ import (
 	_ "image/png"
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
 	"time"
 
 	"Projet-Red_Zyrrathion/character"
@@ -20,6 +22,12 @@ type Game struct {
 	mouseDown  bool
 	started    bool
 	bouton     *ui.Bouton
+}
+
+func GetPath(rel string) string {
+	_, filename, _, _ := runtime.Caller(0)
+	baseDir := filepath.Dir(filename)
+	return filepath.Join(baseDir, rel)
 }
 
 // Affiche le texte d'intro dans la console
@@ -100,7 +108,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 
 func main() {
 	// Charger l'image de fond
-	file, err := os.Open("assets/images/Zyrrathion.png")
+	imagePath := GetPath("../assets/images/Zyrrathion.png")
+	file, err := os.Open(imagePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -111,7 +120,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fontPath := "assets/polices/Fixedsys62.ttf"
+	fontPath := GetPath("../assets/polices/Fixedsys62.ttf")
 	fontFace := ui.LoadFont(fontPath, 32)
 
 	// Initialiser le jeu et le bouton
